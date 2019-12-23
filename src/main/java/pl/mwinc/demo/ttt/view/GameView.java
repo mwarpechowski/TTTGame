@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,6 +16,5 @@ public class GameView {
     private ZonedDateTime createDate;
     private String playerX;
     private String playerO;
-    private int boardSize;
-    private Set<MoveView> moves;
+    private BoardView board;
 }

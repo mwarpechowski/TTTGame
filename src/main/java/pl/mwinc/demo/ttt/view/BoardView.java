@@ -5,12 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @ToString
-public class MoveView {
-    private Long seqNumber;
-    private PlayerSymbol symbol;
-    private int row;
-    private int col;
+public class BoardView {
+    private int size;
+    private Map<Integer, Map<Integer, PlayerSymbol>> fields;
 }

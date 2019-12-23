@@ -1,10 +1,10 @@
 package pl.mwinc.demo.ttt.model.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -14,5 +14,6 @@ import java.io.Serializable;
 @ToString
 public class MoveId implements Serializable {
     private Long gameId;
+    @Column(name = "seq_number")
     private Long seqNumber;
 }

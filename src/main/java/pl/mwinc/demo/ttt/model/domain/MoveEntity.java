@@ -1,15 +1,14 @@
 package pl.mwinc.demo.ttt.model.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Setter
@@ -20,10 +19,8 @@ public class MoveEntity {
     @EmbeddedId
     private MoveId moveId;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_gameId")
-    private GameEntity game;
-
+    @Column(length=1)
+    @NotNull
     private String symbol;
 
     @Embedded

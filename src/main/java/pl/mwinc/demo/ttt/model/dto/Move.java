@@ -11,7 +11,7 @@ import pl.mwinc.demo.ttt.model.PlayerSymbol;
 @Getter
 @ToString
 public class Move {
-    private Game game;
+    private Long gameId;
     private Long seqNumber;
     private PlayerSymbol symbol;
     private Position position;

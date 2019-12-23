@@ -1,10 +1,10 @@
 package pl.mwinc.demo.ttt.model.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -12,6 +12,8 @@ import javax.persistence.Embeddable;
 @Getter
 @ToString
 public class PositionEntity {
-    private int x;
-    private int y;
+    @Column(name = "col_number")
+    private int col;
+    @Column(name = "row_number")
+    private int row;
 }

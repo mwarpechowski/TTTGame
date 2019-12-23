@@ -7,7 +7,7 @@ import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.view.GameView;
 
 @Mapper(componentModel = "spring",
-        uses = {MoveMapper.class, PlayerMapper.class}
+        uses = {MoveMapper.class, PlayerMapper.class, BoardMapper.class}
 )
 public interface GameMapper {
 

@@ -4,14 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.time.ZonedDateTime;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -31,6 +28,5 @@ public class GameEntity {
 
     private int boardSize;
 
-    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
-    private Set<MoveEntity> moves;
+    private String board;
 }

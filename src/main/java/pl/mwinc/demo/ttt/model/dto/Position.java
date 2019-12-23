@@ -10,6 +10,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Position {
-    private int x;
-    private int y;
+    private int row;
+    private int col;
 }

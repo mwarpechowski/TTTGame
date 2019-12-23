@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.dao.GameDAO;
+import pl.mwinc.demo.ttt.model.dto.Board;
 import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.model.dto.Player;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
 
 import java.time.ZonedDateTime;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,9 +52,8 @@ public class GameService {
         Game game = Game.builder()
                 .playerX(x)
                 .playerO(o)
-                .boardSize(boardSize)
                 .dateTime(ZonedDateTime.now())
-                .moves(new HashSet<>())
+                .board(new Board(boardSize))
                 .build();
 
         return save(game);
