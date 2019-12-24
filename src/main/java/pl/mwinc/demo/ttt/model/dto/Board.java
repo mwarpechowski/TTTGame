@@ -3,6 +3,7 @@ package pl.mwinc.demo.ttt.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class Board {
                 .set(move.getSymbol());
     }
 
-    public static class FieldAlreadySetException extends Exception {
+    public static class FieldAlreadySetException extends UnacceptableMoveException {
         public FieldAlreadySetException(Position p) {
             super(String.format("Field at row: %d col: %d already has assigned value", p.getRow(), p.getCol()));
         }

@@ -3,6 +3,7 @@ package pl.mwinc.demo.ttt.model.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,13 @@ public class GameEntity {
 
     private String playerO;
 
+    private PlayerSymbol currentPlayer;
+
     private int boardSize;
 
     private String board;
+
+    private int winningLength;
+
+    private PlayerSymbol winner;
 }

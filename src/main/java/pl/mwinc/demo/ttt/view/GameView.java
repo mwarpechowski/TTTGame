@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import java.time.ZonedDateTime;
 
@@ -16,5 +17,7 @@ public class GameView {
     private ZonedDateTime createDate;
     private String playerX;
     private String playerO;
+    private PlayerSymbol currentPlayer;
+    private PlayerSymbol winner;
     private BoardView board;
 }
