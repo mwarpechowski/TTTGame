@@ -1,6 +1,9 @@
 package pl.mwinc.demo.ttt.model.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +12,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Setter
 @Getter
 @ToString

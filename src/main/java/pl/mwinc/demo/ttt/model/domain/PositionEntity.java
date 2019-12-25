@@ -12,8 +12,8 @@ import javax.persistence.Embeddable;
 @Getter
 @ToString
 public class PositionEntity {
-    @Column(name = "col_number")
+    @Column(name = "col_number", nullable = false)
     private int col;
-    @Column(name = "row_number")
+    @Column(name = "row_number", nullable = false)
     private int row;
 }

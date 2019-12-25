@@ -19,7 +19,7 @@ public class MoveEntity {
     @EmbeddedId
     private MoveId moveId;
 
-    @Column(length=1)
+    @Column(length=1, nullable = false)
     @NotNull
     private String symbol;
 

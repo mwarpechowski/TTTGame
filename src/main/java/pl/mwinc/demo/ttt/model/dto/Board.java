@@ -62,6 +62,11 @@ public class Board {
                 .set(move.getSymbol());
     }
 
+    public void unset(Position position) {
+        getBoardField(position)
+                .unset();
+    }
+
     public static class FieldAlreadySetException extends UnacceptableMoveException {
         public FieldAlreadySetException(Position p) {
             super(String.format("Field at row: %d col: %d already has assigned value", p.getRow(), p.getCol()));
@@ -89,6 +94,10 @@ public class Board {
                 throw new FieldAlreadySetException(new Position(row, col));
             }
             this.content = symbol;
+        }
+
+        void unset(){
+            this.content = null;
         }
     }
 

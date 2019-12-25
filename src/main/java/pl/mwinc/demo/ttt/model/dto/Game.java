@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.mwinc.demo.ttt.controler.exception.GameAlreadyFinishedException;
 import pl.mwinc.demo.ttt.controler.exception.InvalidMoveException;
 import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
@@ -28,8 +30,10 @@ public class Game {
     private PlayerSymbol currentPlayer;
     private PlayerSymbol winner;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
     public void validate(Move move) throws InvalidMoveException, UnacceptableMoveException {
+        LOGGER.debug("Validating {}", move);
         if (move.getPosition().getRow() >= board.getSize()) {
             throw new InvalidMoveException(String.format(TEMPLATE_MOVE_OUTSIDE_BOARD, board.getSize() - 1));
         }
@@ -45,10 +49,22 @@ public class Game {
     }
 
     public Move accept(Move move) throws UnacceptableMoveException {
-        move.setSeqNumber(++movesCounter);
+        LOGGER.debug("{} accepting {}", this, move);
+        movesCounter = ++movesCounter;
+        move.setSeqNumber(movesCounter);
         board.apply(move);
         changeCurrentPlayer();
+        LOGGER.debug("{} accepted {}", this, move);
         return move;
+    }
+
+    public void undo(Move move){
+        LOGGER.debug("{} reverting {}", this, move);
+        board.unset(move.getPosition());
+        movesCounter = --movesCounter;
+        setWinner(null);
+        changeCurrentPlayer();
+        LOGGER.debug("{} reverted {}", this, move);
     }
 
     private void changeCurrentPlayer() {

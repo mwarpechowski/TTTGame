@@ -28,7 +28,7 @@ import pl.mwinc.demo.ttt.view.MoveView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -82,8 +82,7 @@ public class GameControler {
     @GetMapping(path = "/{gameId}")
     public GameView getGame(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId) {
         LOGGER.info("Get game {} invoked", gameId);
-        Game game = Optional.of(gameId)
-                .map(gameService::fetch)
+        Game game = gameService.fetch(gameId)
                 .orElseThrow(GameNotFound::new);
         return gameMapper.toView(game);
     }
@@ -99,13 +98,20 @@ public class GameControler {
         }
     }
 
+    @GetMapping(path = "/{gameId}/move")
+    public List<MoveView> getMoves(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId) {
+        LOGGER.info("Get game(id={}) moves invoked", gameId);
+        return moveService.fetchAll(gameId).stream()
+                .map(moveMapper::toView)
+                .collect(Collectors.toList());
+    }
+
     @PutMapping(path = "/{gameId}/move")
     @ResponseStatus(HttpStatus.CREATED)
     public MoveView newMove(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId,
                             @Valid @RequestBody NewMoveRequest request) {
         LOGGER.info("New move requested: {}", request);
-        Game game = Optional.of(gameId)
-                .map(gameService::fetch)
+        Game game = gameService.fetch(gameId)
                 .orElseThrow(GameNotFound::new);
         Move move = Move.builder()
                 .gameId(gameId)
@@ -116,5 +122,15 @@ public class GameControler {
                 .build();
         Move appliedMove = gameService.applyMove(game, move);
         return moveMapper.toView(appliedMove);
+    }
+
+    @DeleteMapping(path = "/{gameId}/move")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void undoLastMove(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId){
+        // Only last move can be deleted
+        LOGGER.info("Undo last move for Game(id={}) invoked", gameId);
+        Game game = gameService.fetch(gameId)
+                .orElseThrow(GameNotFound::new);
+        gameService.undoLastMove(game);
     }
 }

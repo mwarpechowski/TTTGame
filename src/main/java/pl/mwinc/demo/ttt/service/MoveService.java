@@ -1,20 +1,53 @@
 package pl.mwinc.demo.ttt.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.mwinc.demo.ttt.model.dao.MoveDAO;
+import pl.mwinc.demo.ttt.model.domain.MoveId;
 import pl.mwinc.demo.ttt.model.dto.Move;
+import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
+import pl.mwinc.demo.ttt.service.exception.FailedToSaveMoveException;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MoveService {
 
+    @Autowired
+    private MoveDAO moveDAO;
+
+    @Autowired
+    private MoveMapper moveMapper;
+
+    public Optional<Move> fetch(Long gameId, Long seqNumber){
+        MoveId id = MoveId.builder().gameId(gameId).seqNumber(seqNumber).build();
+        return Optional.of(id)
+                .map(moveDAO::findOne)
+                .map(moveMapper::toDto);
+    }
+
     public List<Move> fetchAll(Long gameId){
-        return Collections.emptyList();
+        return moveDAO.findByMoveIdGameId(gameId).stream()
+                .map(moveMapper::toDto)
+                .sorted(Comparator.comparingLong(Move::getSeqNumber))
+                .collect(Collectors.toList());
     }
 
     public Move save(Move move){
-        return null;
+        return Optional.ofNullable(move)
+                .map(moveMapper::toEntity)
+                .map(moveDAO::save)
+                .map(moveMapper::toDto)
+                .orElseThrow(FailedToSaveMoveException::new);
+    }
+
+    public void delete(Move move) {
+        Optional.ofNullable(move)
+                .map(moveMapper::toEntity)
+                .ifPresent(moveDAO::delete);
     }
 
     public void deleteAllMoves(Long gameId){

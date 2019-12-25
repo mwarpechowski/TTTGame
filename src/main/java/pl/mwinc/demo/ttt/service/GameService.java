@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.dao.GameDAO;
 import pl.mwinc.demo.ttt.model.dto.Board;
@@ -12,6 +13,7 @@ import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.model.dto.Move;
 import pl.mwinc.demo.ttt.model.dto.Player;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
+import pl.mwinc.demo.ttt.service.exception.FailedToSaveGameException;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -39,9 +41,10 @@ public class GameService {
                 .collect(Collectors.toSet());
     }
 
-    public Game fetch(Long gameId) {
-        return gameMapper.toDto(
-                gameDAO.findOne(gameId));
+    public Optional<Game> fetch(Long gameId) {
+        return Optional.of(gameId)
+                .map(gameDAO::findOne)
+                .map(gameMapper::toDto);
     }
 
     public Game save(Game game) {
@@ -50,12 +53,13 @@ public class GameService {
                 .map(gameMapper::toEntity)
                 .map(gameDAO::save)
                 .map(gameMapper::toDto)
-                .orElse(game);
+                .orElseThrow(FailedToSaveGameException::new);
         game.setId(saved.getId());
         LOGGER.info("Saved game: {}", saved);
         return saved;
     }
 
+    @Transactional
     public void delete(Long gameId) {
         LOGGER.info("Deleting game id: {}", gameId);
         try {
@@ -80,15 +84,25 @@ public class GameService {
                 .board(new Board(boardSize))
                 .winningLength(winningLength)
                 .build();
-
         return save(game);
     }
 
+    @Transactional
     public Move applyMove(Game game, Move move) {
         game.validate(move);
         Move acceptedMove = game.accept(move);
         save(game);
         moveService.save(acceptedMove);
         return acceptedMove;
+    }
+
+    @Transactional
+    public void undoLastMove(Game game) {
+        moveService.fetch(game.getId(), game.getMovesCounter())
+                .ifPresent(lastMove -> {
+                    game.undo(lastMove);
+                    save(game);
+                    moveService.delete(lastMove);
+                });
     }
 }
