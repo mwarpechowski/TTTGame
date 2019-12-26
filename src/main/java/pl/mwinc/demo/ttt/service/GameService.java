@@ -13,7 +13,7 @@ import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.model.dto.Move;
 import pl.mwinc.demo.ttt.model.dto.Player;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
-import pl.mwinc.demo.ttt.service.exception.FailedToSaveGameException;
+import pl.mwinc.demo.ttt.service.exception.DbOperationFailedException;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -53,7 +53,7 @@ public class GameService {
                 .map(gameMapper::toEntity)
                 .map(gameDAO::save)
                 .map(gameMapper::toDto)
-                .orElseThrow(FailedToSaveGameException::new);
+                .orElseThrow(() -> new DbOperationFailedException("Failed to save game!"));
         game.setId(saved.getId());
         LOGGER.info("Saved game: {}", saved);
         return saved;

@@ -6,7 +6,7 @@ import pl.mwinc.demo.ttt.model.dao.MoveDAO;
 import pl.mwinc.demo.ttt.model.domain.MoveId;
 import pl.mwinc.demo.ttt.model.dto.Move;
 import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
-import pl.mwinc.demo.ttt.service.exception.FailedToSaveMoveException;
+import pl.mwinc.demo.ttt.service.exception.DbOperationFailedException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -41,7 +41,7 @@ public class MoveService {
                 .map(moveMapper::toEntity)
                 .map(moveDAO::save)
                 .map(moveMapper::toDto)
-                .orElseThrow(FailedToSaveMoveException::new);
+                .orElseThrow(() -> new DbOperationFailedException("Failed to save move!"));
     }
 
     public void delete(Move move) {

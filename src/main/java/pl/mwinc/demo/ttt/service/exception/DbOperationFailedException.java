@@ -1,4 +1,8 @@
 package pl.mwinc.demo.ttt.service.exception;
 
-public class DbOperationFailedException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class DbOperationFailedException extends ResponseStatusException {
+    public DbOperationFailedException(String reason) {super(HttpStatus.INTERNAL_SERVER_ERROR, reason);}
 }

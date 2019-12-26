@@ -1,12 +1,11 @@
 package pl.mwinc.demo.ttt.controler.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidMoveException extends RuntimeException {
+public class InvalidMoveException extends ResponseStatusException {
     public static final String TEMPLATE_MOVE_OUTSIDE_BOARD = "Move outside board. Maximum row or column number is %d";
     public InvalidMoveException(String message) {
-        super(message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }
