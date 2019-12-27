@@ -1,4 +1,4 @@
-package pl.mwinc.demo.ttt.controler;
+package pl.mwinc.demo.ttt.controler.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 import static pl.mwinc.demo.ttt.StaticGlobalConfig.GAME_ID_MIN;
 
 @RestController
-@RequestMapping(path = "/game", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-public class GameControler {
+@RequestMapping(path = "/api/game", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+public class ApiGameController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameControler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiGameController.class);
 
     @Autowired
     private GameService gameService;

@@ -73,6 +73,7 @@ public class GameService {
     }
 
     public Game createGame(String playerX, String playerO, int boardSize, int winningLength) {
+        LOGGER.info("Creating new game: x={}, y={}, size={}, winLine={}", playerX, playerO, boardSize, winningLength);
         Player x = Player.builder().name(playerX).symbol(PlayerSymbol.X).build();
         Player o = Player.builder().name(playerO).symbol(PlayerSymbol.O).build();
 
@@ -84,6 +85,7 @@ public class GameService {
                 .board(new Board(boardSize))
                 .winningLength(winningLength)
                 .build();
+        LOGGER.info("Created new {}", game);
         return save(game);
     }
 

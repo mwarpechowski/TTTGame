@@ -15,6 +15,11 @@ import java.time.ZonedDateTime;
 
 import static pl.mwinc.demo.ttt.controler.exception.InvalidMoveException.TEMPLATE_MOVE_OUTSIDE_BOARD;
 
+/*
+ * Todo:
+ *  * Checking if game is finished: final move detection, setting winner, etc...
+ *  * Extendible board: when initial board size not given create small board and extend on move close to the border
+ */
 @Builder
 @Setter
 @Getter
