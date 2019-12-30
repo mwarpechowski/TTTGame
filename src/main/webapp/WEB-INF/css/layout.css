@@ -1,0 +1,116 @@
+#mainGridContainer {
+    display: grid;
+    grid-template-columns: [start] 1fr [leftSidebar-end content-start] 3fr [content-end rightSidebar-start] 1fr [end];
+    grid-template-rows: [start] 150px [header-end content-start] 100% [content-end footer-start] 50px [end];
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+    align-content: space-between;
+}
+
+#pageLeftSidebar {
+    grid-column: start / leftSidebar-end;
+    grid-row: start / end;
+}
+
+#pageRightSidebar {
+    grid-column: rightSidebar-start / end;
+    grid-row: start / end;
+}
+
+#pageHeader {
+    grid-column: content-start / content-end;
+    grid-row: start / header-end;
+}
+
+#pageBody {
+    grid-column: content-start / content-end;
+    grid-row: content-start / content-end;
+    height: 100%;
+}
+
+#pageFooter {
+    grid-column: content-start / content-end;
+    grid-row: footer-start / end;
+    height: 50px;
+    clear: both;
+    position: relative;
+}
+
+.navigation, .footer {
+    background-color: gainsboro;
+    margin-bottom: 5px;
+}
+
+.navigation span {
+    margin: 2px;
+}
+
+.logo {
+    display: flex;
+}
+
+.logo img {
+    height: 100px;
+}
+
+#ticTacToeLabel {
+    font-family: cursive;
+    margin-right: -8;
+    margin-left: 13%;
+    margin-bottom: auto;
+    margin-top: 6;
+}
+
+#byMWlabel {
+    font-family: cursive;
+    margin-left: -30;
+    margin-right: auto;
+    margin-top: auto;
+}
+
+.deleteButtonBox {
+    background-image: url("img/delete_cross.png");
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.deleteButton {
+    display: block;
+    height: 1em;
+    margin: auto;
+}
+
+.deleteButton:hover {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#gamesTable {
+    margin: auto;
+    border: 2px solid gray;
+}
+
+#gamesTable thead {
+    background-color: #008080;
+    color: #ffffff;
+}
+
+#gamesTable th {
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+}
+
+#gamesTable .playerName, .date, .url {
+    padding-inline-start: 1em;
+    padding-inline-end: 1em;
+    text-align: center;
+}
+
+#gamesTable tr:nth-child(even) {
+    background-color: silver;
+}
+
+caption {
+    padding: 10px;
+}

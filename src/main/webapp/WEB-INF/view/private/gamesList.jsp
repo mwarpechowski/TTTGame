@@ -4,7 +4,7 @@
 <%@ taglib uri = "http://www.springframework.org/tags" prefix = "spring" %>
 
 <div id="gamesListBox" class="gameList">
-    <table name="games_table">
+    <table id="gamesTable">
         <caption>Available games:</caption>
         <thead>
         <tr>
@@ -28,8 +28,8 @@
                 <fmt:formatDate pattern="dd.MM.yyyy HH:mm:ss" value="${parsedDateTime}"/>
                 </span>
                 </td>
-                <td><span id="${game.id}_playerXName" class="player_name"><c:out value="${game.playerX}"/></span></td>
-                <td><span id="${game.id}_playerOName" class="player_name"><c:out value="${game.playerO}"/></span></td>
+                <td><span id="${game.id}_playerXName" class="playerName"><c:out value="${game.playerX}"/></span></td>
+                <td><span id="${game.id}_playerOName" class="playerName"><c:out value="${game.playerO}"/></span></td>
                 <td>
                     <div id="${game.id}_finishedIndicator"
                          title="

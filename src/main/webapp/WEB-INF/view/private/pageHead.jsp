@@ -3,3 +3,4 @@
 
 <meta charset="utf-8">
 <meta name="author" content="Michał Warpechowski">
+<link rel="stylesheet" href='<spring:url value="/css/layout.css"/>'>

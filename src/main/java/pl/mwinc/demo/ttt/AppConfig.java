@@ -49,6 +49,10 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Register resource handler for CSS
+        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/")
+                .setCacheControl(CacheControl.noCache());
+     //           .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
 
         // Register resource handler for images
         registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/")
