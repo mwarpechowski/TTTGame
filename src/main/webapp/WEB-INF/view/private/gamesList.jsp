@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         <c:forEach items="${games}" var="game">
-            <tr>
+            <tr id="game_list_entry_${game.id}">
                 <td><span id="${game.id}_gameURL" class="url"><a href="${contextPath}/game/${game.id}">#<c:out
                         value="${game.id}"/></a></span>
                 </td>
@@ -42,7 +42,7 @@
                         <img src='<spring:url value="/img/delete_cross.png"/>' alt="Delete" about="Picture taken from HiClipart.com"
                              title="Delete"
                              class="deleteButton"
-                             onclick="delete(${contextPath}/game/${game.id})">
+                             onclick='delete_game(${game.id});'>
                 </td>
             </tr>
         </c:forEach>

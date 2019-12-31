@@ -54,6 +54,11 @@ public class AppConfig implements WebMvcConfigurer {
                 .setCacheControl(CacheControl.noCache());
      //           .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
 
+        // Register resource handler for JS
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/")
+                .setCacheControl(CacheControl.noCache());
+        //           .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+
         // Register resource handler for images
         registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/")
                 .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
