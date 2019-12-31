@@ -111,6 +111,21 @@
     background-color: silver;
 }
 
-caption {
+#gamesTable caption {
     padding: 10px;
+}
+
+#movesListBox .move_O {
+}
+
+#movesListBox .move_X {
+    background-color: gainsboro;
+}
+
+.boardFieldHover {
+    background-color: navy;
+}
+
+.moveListItemHover {
+    background-color: blue;
 }

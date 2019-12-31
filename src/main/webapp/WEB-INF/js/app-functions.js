@@ -7,3 +7,19 @@ function delete_game(gameId) {
         }
     });
 }
+
+function markMoveListItem(moveId) {
+    $("#move_"+moveId).addClass('moveListItemHover');
+}
+
+function unmarkMoveListItem(moveId) {
+    $("#move_"+moveId).removeClass('moveListItemHover');
+}
+
+function markBoardField(col, row) {
+    $('#boardField_'+col+'_'+row).addClass('boardFieldHover');
+}
+
+function unmarkBoardField(col, row) {
+    $('#boardField_'+col+'_'+row).removeClass('boardFieldHover');
+}
