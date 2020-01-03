@@ -75,7 +75,7 @@ public class GameController {
         model.addAttribute("game", gameView);
         return "Game";
     }
-    
+
     @GetMapping(path = "/{gameId}/move")
     public String getMoves(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId, Model model) {
         LOGGER.info("Get game(id={}) moves invoked", gameId);

@@ -3,7 +3,7 @@
 <%@ taglib uri = "http://www.springframework.org/tags" prefix = "spring" %>
 
 <div id="movesListBox">
-    <ol>
+    <ol id="movesList">
         <c:forEach items="${moves}" var="move">
             <li id="move_${move.seqNumber}" class="move_${move.symbol}"
                 onmouseenter="markBoardField(${move.col}, ${move.row}); markMoveListItem(${move.seqNumber});"

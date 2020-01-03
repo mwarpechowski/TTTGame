@@ -15,8 +15,11 @@ pageEncoding="UTF-8"%>
                 <input type="text" size="20" id="playerOName" name="playerO">
             </div>
             <div id="boardSizeBox">
+
                 <span id="boardSizeLabel">Board size:</span>
-                <input name="boardSize" type="number" min="3" max="200">
+                <input name="boardSize" type="number" min="3" max="200" value="3";
+                       title="TODO: set default value, add hide when not used"
+                >
             </div>
             <div id="winningLengthBox">
                 <span id="winningLengthLabelPrefix">Mode:</span>

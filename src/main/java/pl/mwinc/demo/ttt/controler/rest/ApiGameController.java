@@ -125,7 +125,7 @@ public class ApiGameController {
                 .orElseThrow(GameNotFound::new);
         Move move = Move.builder()
                 .gameId(gameId)
-                .symbol(request.getSymbol())
+                .symbol(Optional.ofNullable(request.getSymbol()).orElseGet(game.getStatus()::getCurrentPlayer))
                 .position(Position.builder()
                         .row(request.getRow())
                         .col(request.getCol()).build())

@@ -1,9 +1,16 @@
+<%@ taglib uri = "http://www.springframework.org/tags" prefix = "spring" %>
 <%@ tag description="Overall Page template" pageEncoding="UTF-8" %>
 <%@ attribute name="title" fragment="true" %>
+<%@ attribute name="pageSpecificScript" fragment="true" %>
 
 <html>
 <head>
-    <jsp:include page="../view/private/pageHead.jsp" />
+    <meta charset="utf-8">
+    <meta name="author" content="Michał Warpechowski">
+    <link rel="stylesheet" href='<spring:url value="/css/layout.css"/>'>
+    <script>var contextPath='<%= request.getContextPath() %>'</script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <jsp:invoke fragment="pageSpecificScript"/>
     <title><jsp:invoke fragment="title"/></title>
 </head>
 <body>
