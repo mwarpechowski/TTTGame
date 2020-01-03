@@ -32,24 +32,23 @@ public class Game {
     private Board board;
     private int winningLength;
     private long movesCounter;
-    private PlayerSymbol currentPlayer;
-    private PlayerSymbol winner;
+    private GameStatus status;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
     public void validate(Move move) throws InvalidMoveException, UnacceptableMoveException {
         LOGGER.debug("Validating {}", move);
+        if (status.isFinished() ){
+            throw new GameAlreadyFinishedException();
+        }
         if (move.getPosition().getRow() >= board.getSize()) {
             throw new InvalidMoveException(String.format(TEMPLATE_MOVE_OUTSIDE_BOARD, board.getSize() - 1));
         }
         if (move.getPosition().getCol() >= board.getSize()) {
             throw new InvalidMoveException(String.format(TEMPLATE_MOVE_OUTSIDE_BOARD, board.getSize() - 1));
         }
-        if (move.getSymbol() != currentPlayer) {
-            throw new UnacceptableMoveException("Invalid player. Current move belongs to player " + currentPlayer);
-        }
-        if (winner != null) {
-            throw new GameAlreadyFinishedException();
+        if (move.getSymbol() != status.getCurrentPlayer()) {
+            throw new UnacceptableMoveException("Invalid player. Current move belongs to player " + status.getCurrentPlayer());
         }
     }
 
@@ -67,13 +66,14 @@ public class Game {
         LOGGER.debug("{} reverting {}", this, move);
         board.unset(move.getPosition());
         movesCounter = --movesCounter;
-        setWinner(null);
+        status.setWinner(null);
         changeCurrentPlayer();
         LOGGER.debug("{} reverted {}", this, move);
     }
 
     private void changeCurrentPlayer() {
-        currentPlayer = currentPlayer == PlayerSymbol.X ? PlayerSymbol.O : PlayerSymbol.X;
+        PlayerSymbol currentPlayer = status.getCurrentPlayer() == PlayerSymbol.X ? PlayerSymbol.O : PlayerSymbol.X;
+        status.setCurrentPlayer(currentPlayer);
     }
 
 }

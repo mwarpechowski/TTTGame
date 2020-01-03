@@ -10,6 +10,7 @@ import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.dao.GameDAO;
 import pl.mwinc.demo.ttt.model.dto.Board;
 import pl.mwinc.demo.ttt.model.dto.Game;
+import pl.mwinc.demo.ttt.model.dto.GameStatus;
 import pl.mwinc.demo.ttt.model.dto.Move;
 import pl.mwinc.demo.ttt.model.dto.Player;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
@@ -80,10 +81,12 @@ public class GameService {
         Game game = Game.builder()
                 .playerX(x)
                 .playerO(o)
-                .currentPlayer(new Random().nextBoolean() ? x.getSymbol() : o.getSymbol())
                 .dateTime(ZonedDateTime.now())
                 .board(new Board(boardSize))
                 .winningLength(winningLength)
+                .status(GameStatus.builder()
+                        .currentPlayer(new Random().nextBoolean() ? x.getSymbol() : o.getSymbol())
+                        .build())
                 .build();
         LOGGER.info("Created new {}", game);
         return save(game);

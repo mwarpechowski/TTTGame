@@ -3,9 +3,9 @@ package pl.mwinc.demo.ttt.model.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,9 +32,6 @@ public class GameEntity {
     private String playerO;
 
     @Column(nullable = false)
-    private PlayerSymbol currentPlayer;
-
-    @Column(nullable = false)
     private int boardSize;
 
     @Column(nullable = false)
@@ -46,5 +43,6 @@ public class GameEntity {
     @Column(nullable = false)
     private int winningLength;
 
-    private PlayerSymbol winner;
+    @Embedded
+    private GameStatusEntity status;
 }

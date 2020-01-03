@@ -17,6 +17,9 @@ public interface GameMapper {
 
     @Mapping(source = "playerX.name", target = "playerX")
     @Mapping(source = "playerO.name", target = "playerO")
-    @Mapping(source = "dateTime", target="createDate")
+    @Mapping(source = "dateTime", target = "createDate")
+    @Mapping(source = "status.winner", target = "winner")
+    @Mapping(source = "status.finished", target = "finished")
+    @Mapping(source = "status.currentPlayer", target = "currentPlayer")
     GameView toView(Game game);
 }

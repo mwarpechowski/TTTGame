@@ -18,6 +18,7 @@ public class GameView {
     private String playerX;
     private String playerO;
     private PlayerSymbol currentPlayer;
+    private boolean finished;
     private PlayerSymbol winner;
     private BoardView board;
 }
