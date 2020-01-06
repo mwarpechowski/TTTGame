@@ -28,7 +28,6 @@
         </div>
     </div>
     <div><ul>TODO:
-        <li>Marking current player</li>
         <li>Showing/hiding axis</li>
         <li>Showing/hidding moves history</li>
         <li>Undo move button</li>
@@ -51,5 +50,5 @@
         </li>
         <li>Saving preferences in cookies</li>
     </ul></div>
-    <t:boardtable model="${game.board}" gameId="${game.id}"/>
+    <t:boardtable model="${game.board}"/>
 </div>

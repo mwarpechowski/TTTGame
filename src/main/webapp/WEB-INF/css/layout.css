@@ -138,6 +138,10 @@
     font-weight: bold;
 }
 
+#gameConfigInfo .playerName.current {
+    background-color: silver;
+}
+
 #gameControls {
     display: flex;
     padding-top: 0.5em;

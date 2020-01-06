@@ -2,10 +2,9 @@
 <%@ taglib tagdir = "/WEB-INF/tags" prefix="t" %>
 <%@ tag description="Template of game board" pageEncoding="UTF-8" %>
 <%@ attribute name="model" type="pl.mwinc.demo.ttt.view.BoardView" required="true" %>
-<%@ attribute name="gameId" type="java.lang.Integer" required="true" %>
 
 <div id="gameBoardTableWrap">
-<table id="gameBoardTable" data-gameid="${gameId}">
+<table id="gameBoardTable">
     <tbody>
         <!-- horizontal axis row -->
         <tr>

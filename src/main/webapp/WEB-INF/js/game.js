@@ -1,6 +1,9 @@
 // Game Board specific functions
 
-$(document).ready(initBoardTableEventHandlers);
+$(document).ready(function () {
+    initBoardTableEventHandlers();
+    updateGameStatus(gameId);
+});
 
 function initBoardTableEventHandlers() {
     $('tr').on('click', '.boardField:not(".X, .O, .disabled")', handleBoardFieldClicked);
@@ -19,7 +22,7 @@ function disableBoardTable() {
 function handleBoardFieldClicked(event) {
     var col = $(this).data('col');
     var row = $(this).data('row');
-    var gameId = $('#gameBoardTable').data('gameid');
+//    var gameId = $('#gameBoardTable').data('gameid');
     movePerformed(gameId, col, row);
 }
 
@@ -62,7 +65,6 @@ function movePerformed(gameId, col, row) {
             function (msg) {
                 // mark boardFiled
                 var fieldId = '#boardField_'+msg.col+'_'+msg.row;
-                //$(fieldId).append(msg.symbol);
                 $(fieldId).addClass(msg.symbol);
                 $(fieldId).removeClass('hover');  // after click mouse is still over field but new class (symbol) will prevent it from unmark
                 $(fieldId).data('moveid', msg.id);
@@ -110,5 +112,16 @@ function undoLastMove() {
 }
 
 function updateGameStatus(gameId){
+    $.ajax({
+        method: 'GET',
+        url: contextPath + '/api/game/' + gameId + '/status',
+        success: function(msg) {
+            markCurrentPlayer(msg.currentPlayer);
+        }
+    });
+}
 
+function markCurrentPlayer(symbol) {
+    $('.playerName.current').removeClass('current');
+    $('#player'+symbol).addClass('current');
 }

@@ -5,7 +5,10 @@
 
 <t:genericpage>
     <jsp:attribute name="title">Game ${game.id}</jsp:attribute>
-    <jsp:attribute name="pageSpecificScript"><script src='<spring:url value="/js/game.js"/>'></script></jsp:attribute>
+    <jsp:attribute name="pageSpecificScript">
+        <script>var gameId=${game.id}</script>
+        <script src='<spring:url value="/js/game.js"/>'></script>
+    </jsp:attribute>
     <jsp:body>
         <c:set var="contextPath" value="${pageContext.servletContext.contextPath}" scope="session"/>
         <jsp:include page="private/gameBoard.jsp" />
