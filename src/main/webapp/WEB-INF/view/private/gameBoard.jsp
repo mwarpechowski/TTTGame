@@ -20,7 +20,7 @@
         <div id="hideAxesButton" class="button">
             <img src='<spring:url value="/img/axes.png"/>' alt="Axes icon" title="Show axes">
         </div>
-        <div id="undoLastMoveButton" onclick="undoLastMove()">
+        <div id="undoLastMoveButton" class="button" onclick="undoLastMove()">
             <img src='<spring:url value="/img/undo.png"/>' alt="UNDO" title="Undo last move"/>
         </div>
         <div id="showMovesHistoryButton">
@@ -29,7 +29,6 @@
     </div>
     <div><ul>TODO:
         <li>Showing/hidding moves history</li>
-        <li>Undo move button</li>
         <li>Locking board after game is finished</li>
         <li>Fireworks for winning player</li>
         <li>Return no boards for games list</li>

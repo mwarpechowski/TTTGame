@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import pl.mwinc.demo.ttt.controler.api.GameCreateRequest;
-import pl.mwinc.demo.ttt.controler.exception.GameNotFound;
+import pl.mwinc.demo.ttt.controler.exception.GameNotFoundException;
 import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
 import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
@@ -70,7 +70,7 @@ public class GameController {
     public String getGame(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId, Model model) {
         LOGGER.info("Get game {} invoked", gameId);
         Game game = gameService.fetch(gameId)
-                .orElseThrow(GameNotFound::new);
+                .orElseThrow(GameNotFoundException::new);
         GameView gameView = gameMapper.toView(game);
         model.addAttribute("game", gameView);
         return "Game";

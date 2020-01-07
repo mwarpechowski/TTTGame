@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.mwinc.demo.ttt.controler.api.GameCreateRequest;
 import pl.mwinc.demo.ttt.controler.api.NewMoveRequest;
-import pl.mwinc.demo.ttt.controler.exception.GameNotFound;
+import pl.mwinc.demo.ttt.controler.exception.GameNotFoundException;
 import pl.mwinc.demo.ttt.model.dto.Game;
 import pl.mwinc.demo.ttt.model.dto.GameStatus;
 import pl.mwinc.demo.ttt.model.dto.Move;
@@ -85,7 +85,7 @@ public class ApiGameController {
     public GameView getGame(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId) {
         LOGGER.info("Get game {} invoked", gameId);
         Game game = gameService.fetch(gameId)
-                .orElseThrow(GameNotFound::new);
+                .orElseThrow(GameNotFoundException::new);
         return gameMapper.toView(game);
     }
 
@@ -104,7 +104,7 @@ public class ApiGameController {
     public GameStatus getGameStatus(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId) {
         LOGGER.debug("Get game(id={}) status invoked", gameId);
         Game game = gameService.fetch(gameId)
-                .orElseThrow(GameNotFound::new);
+                .orElseThrow(GameNotFoundException::new);
         return game.getStatus();
     }
 
@@ -122,7 +122,7 @@ public class ApiGameController {
                             @Valid @RequestBody NewMoveRequest request) {
         LOGGER.info("New move requested: {}", request);
         Game game = gameService.fetch(gameId)
-                .orElseThrow(GameNotFound::new);
+                .orElseThrow(GameNotFoundException::new);
         Move move = Move.builder()
                 .gameId(gameId)
                 .symbol(Optional.ofNullable(request.getSymbol()).orElseGet(game.getStatus()::getCurrentPlayer))
@@ -135,13 +135,13 @@ public class ApiGameController {
     }
 
     @DeleteMapping(path = "/{gameId}/move")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void undoLastMove(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId) {
+    public MoveView undoLastMove(@Valid @Min(GAME_ID_MIN) @PathVariable Long gameId) {
         // Only last move can be deleted
         LOGGER.info("Undo last move for Game(id={}) invoked", gameId);
         Game game = gameService.fetch(gameId)
-                .orElseThrow(GameNotFound::new);
-        gameService.undoLastMove(game);
+                .orElseThrow(GameNotFoundException::new);
+        Move removedMove = gameService.undoLastMove(game);
+        return moveMapper.toView(removedMove);
     }
 
 }

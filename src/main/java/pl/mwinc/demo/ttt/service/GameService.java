@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.mwinc.demo.ttt.controler.exception.MoveNotFoundException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.dao.GameDAO;
 import pl.mwinc.demo.ttt.model.dto.Board;
@@ -102,12 +103,12 @@ public class GameService {
     }
 
     @Transactional
-    public void undoLastMove(Game game) {
-        moveService.fetch(game.getId(), game.getMovesCounter())
-                .ifPresent(lastMove -> {
-                    game.undo(lastMove);
-                    save(game);
-                    moveService.delete(lastMove);
-                });
+    public Move undoLastMove(Game game) throws MoveNotFoundException {
+        Move lastMove = moveService.fetch(game.getId(), game.getMovesCounter())
+                .orElseThrow(MoveNotFoundException::new);
+        game.undo(lastMove);
+        save(game);
+        moveService.delete(lastMove);
+        return  lastMove;
     }
 }

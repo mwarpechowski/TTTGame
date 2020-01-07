@@ -16,6 +16,21 @@ function initGameControlsEventHandlers() {
     $('#hideAxesButton').on('click', toggleBoardAxes);
 }
 
+function updateGameStatus(gameId){
+    $.ajax({
+        method: 'GET',
+        url: contextPath + '/api/game/' + gameId + '/status',
+        success: function(msg) {
+            markCurrentPlayer(msg.currentPlayer);
+        }
+    });
+}
+
+function markCurrentPlayer(symbol) {
+    $('.playerName.current').removeClass('current');
+    $('#player'+symbol).addClass('current');
+}
+
 function enableBoardTable() {
     $('.boardField').removeClass("disabled");
 }
@@ -43,24 +58,6 @@ function toggleBoardAxes(event) {
     $('.boardHorizontalAxis').toggleClass("hidden");
 }
 
-
-
-function markMoveListItem(moveId) {
-    $("#move_"+moveId).addClass('hover');
-}
-
-function unmarkMoveListItem(moveId) {
-    $("#move_"+moveId).removeClass('hover');
-}
-
-function markBoardField(col, row) {
-    $('#boardField_'+col+'_'+row).addClass('hover');
-}
-
-function unmarkBoardField(col, row) {
-    $('#boardField_'+col+'_'+row).removeClass('hover');
-}
-
 function movePerformed(gameId, col, row) {
     var moveRequest = JSON.parse('{"col":' + col + ',"row":' + row + ',"gameId":' + gameId +'}');
     $.ajax({
@@ -71,12 +68,8 @@ function movePerformed(gameId, col, row) {
         data: JSON.stringify(moveRequest),
         processData: false,
         success: [
-            function (msg) {
-                // mark boardFiled
-                var fieldId = '#boardField_'+msg.col+'_'+msg.row;
-                $(fieldId).addClass(msg.symbol);
-                $(fieldId).removeClass('hover');  // after click mouse is still over field but new class (symbol) will prevent it from unmark
-                $(fieldId).data('moveid', msg.id);
+            function (move) {
+                markMoveOnBoardField(move);
             },
             function(msg){
                 // add entry to moves list
@@ -107,30 +100,38 @@ function undoLastMove() {
     $.ajax({
         type: "DELETE",
         url: contextPath + '/api/game/' + gameId + '/move',
-        success: [function(msg){
+        success: [function(move){
             // remove last entry from moves list
+            $('#move_'+move.seqNumber).remove();
         },
-        function(msg) {
+        function(move) {
             // update board (requires move coordinates)
+            unmarkMoveOnBoardField(move);
         },
-        function(msg){
+        function(move){
             // trigger game state check
             updateGameStatus(gameId);
         }]
     });
 }
 
-function updateGameStatus(gameId){
-    $.ajax({
-        method: 'GET',
-        url: contextPath + '/api/game/' + gameId + '/status',
-        success: function(msg) {
-            markCurrentPlayer(msg.currentPlayer);
-        }
-    });
+function markMoveOnBoardField(move) {
+    var fieldId = '#boardField_'+move.col+'_'+move.row;
+    $(fieldId).addClass(move.symbol);
+    $(fieldId).removeClass('hover');  // after click mouse is still over field but new class (symbol) will prevent it from unmark
+    $(fieldId).attr('data-moveid', move.seqNumber);
 }
 
-function markCurrentPlayer(symbol) {
-    $('.playerName.current').removeClass('current');
-    $('#player'+symbol).addClass('current');
+function unmarkMoveOnBoardField(move) {
+    var fieldId = '#boardField_'+move.col+'_'+move.row;
+    $(fieldId).removeClass(move.symbol);
+    $(fieldId).removeAttr('data-moveid', null);
+}
+
+function markMoveListItem(moveId) {
+    $("#move_"+moveId).addClass('hover');
+}
+
+function unmarkMoveListItem(moveId) {
+    $("#move_"+moveId).removeClass('hover');
 }
