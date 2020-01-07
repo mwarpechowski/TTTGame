@@ -3,7 +3,8 @@
 $(document).ready(function () {
     initBoardTableEventHandlers();
     initGameControlsEventHandlers();
-    updateGameStatus(gameId);
+    initMovesHistoryEventHandlers();
+    updateGameStatus();
 });
 
 function initBoardTableEventHandlers() {
@@ -14,9 +15,15 @@ function initBoardTableEventHandlers() {
 
 function initGameControlsEventHandlers() {
     $('#hideAxesButton').on('click', toggleBoardAxes);
+    $('#showMovesHistoryButton').on('click', toggleMovesHistory);
 }
 
-function updateGameStatus(gameId){
+function initMovesHistoryEventHandlers() {
+    $("#rightSidebarBox").on('mouseenter', '#movesHistory li', handleMovesHistoryItemMouseenter);
+    $("#rightSidebarBox").on('mouseleave', '#movesHistory li', handleMovesHistoryItemMouseleave);
+}
+
+function updateGameStatus(){
     $.ajax({
         method: 'GET',
         url: contextPath + '/api/game/' + gameId + '/status',
@@ -53,6 +60,18 @@ function handleBoardFieldMouseleave(event) {
     $(this).removeClass("hover");
 }
 
+function handleMovesHistoryItemMouseenter(event) {
+    $(this).addClass("hover");
+    var boardFieldId = '#boardField_' + $(this).attr('data-col') + '_' + $(this).attr('data-row');
+    $(boardFieldId).addClass("hover");
+}
+
+function handleMovesHistoryItemMouseleave(event) {
+    $(this).removeClass("hover");
+    var boardFieldId = '#boardField_' + $(this).attr('data-col') + '_' + $(this).attr('data-row');
+    $(boardFieldId).removeClass("hover");
+}
+
 function toggleBoardAxes(event) {
     $('.boardVerticalAxis').toggleClass("hidden");
     $('.boardHorizontalAxis').toggleClass("hidden");
@@ -68,31 +87,10 @@ function movePerformed(gameId, col, row) {
         data: JSON.stringify(moveRequest),
         processData: false,
         success: [
-            function (move) {
-                markMoveOnBoardField(move);
-            },
-            function(msg){
-                // add entry to moves list
-                var moveElem = document.createElement("p");
-                moveElem.id = 'move_'+msg.seqNumber;
-                moveElem.classList.add('move_'+msg.symbol);
-                var moveElemSpan = document.createElement("span");
-                moveElemSpan.append(document.createTextNode(msg.symbol + ': col=' + msg.col + ' row=' + msg.row));
-                moveElem.append(moveElemSpan);
-                $("#leftSidebarBox").append(moveElem);
-                // add event listeners when new element is already inserted into document
-            },
-            function(msg) {
-                var moveId = '#move_'+msg.seqNumber;
-                $(moveId).on('mouseenter', function() {markMoveListItem(msg.seqNumber)});
-                $(moveId).on('mouseenter', function() {markBoardField(msg.col, msg.row)});
-                $(moveId).on('mouseleave', function() {unmarkMoveListItem(msg.seqNumber)});
-                $(moveId).on('mouseleave', function() {unmarkBoardField(msg.col, msg.row)});
-            },
-            function(msg){
-                // trigger game state check
-                updateGameStatus(gameId);
-            }]
+            markMoveOnBoardField,
+            addEntryToMovesHistory,
+            updateGameStatus
+        ]
     });
 }
 
@@ -100,18 +98,11 @@ function undoLastMove() {
     $.ajax({
         type: "DELETE",
         url: contextPath + '/api/game/' + gameId + '/move',
-        success: [function(move){
-            // remove last entry from moves list
-            $('#move_'+move.seqNumber).remove();
-        },
-        function(move) {
-            // update board (requires move coordinates)
-            unmarkMoveOnBoardField(move);
-        },
-        function(move){
-            // trigger game state check
-            updateGameStatus(gameId);
-        }]
+        success: [
+            removeEntryFromMovesHistory,
+            unmarkMoveOnBoardField,
+            updateGameStatus
+        ]
     });
 }
 
@@ -128,10 +119,54 @@ function unmarkMoveOnBoardField(move) {
     $(fieldId).removeAttr('data-moveid', null);
 }
 
-function markMoveListItem(moveId) {
-    $("#move_"+moveId).addClass('hover');
+function addEntryToMovesHistory(move) {
+    var movesHistoryEntry = createMoveHistoryEntry(move);
+    $('#movesHistory').append(movesHistoryEntry);
 }
 
-function unmarkMoveListItem(moveId) {
-    $("#move_"+moveId).removeClass('hover');
+function createMoveHistoryEntry(move) {
+    var symbol = document.createElement("span");
+    symbol.classList.add("symbol");
+    symbol.append(document.createTextNode(move.symbol + ':'));
+
+    var column = document.createElement("span");
+    column.classList.add("column");
+    column.append(document.createTextNode('col=' + move.col));
+
+    var row = document.createElement("span");
+    row.classList.add("row");
+    row.append(document.createTextNode('row=' + move.row));
+
+    var historyEntry = document.createElement("li");
+    historyEntry.id = 'move_'+move.seqNumber;
+    historyEntry.setAttribute("data-moveid", move.seqNumber);
+    historyEntry.setAttribute("data-col", move.col);
+    historyEntry.setAttribute("data-row", move.row);
+    historyEntry.append(symbol);
+    historyEntry.append(column);
+    historyEntry.append(row);
+
+    return historyEntry;
+}
+
+function removeEntryFromMovesHistory(move) {
+    $('#move_'+move.seqNumber).remove();
+}
+
+function toggleMovesHistory(event) {
+    if ($("#movesHistoryBox").length) {
+        $("#movesHistoryBox").remove();
+    } else {
+        fetchMovesHistory();
+    }
+}
+
+function fetchMovesHistory() {
+    $.ajax({
+        type: "GET",
+        url: contextPath + '/game/' + gameId + '/move',
+        success: function (msg) {
+            $('#rightSidebarBox').append(msg);
+        }
+    });
 }

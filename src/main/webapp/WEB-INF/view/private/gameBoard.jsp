@@ -23,12 +23,11 @@
         <div id="undoLastMoveButton" class="button" onclick="undoLastMove()">
             <img src='<spring:url value="/img/undo.png"/>' alt="UNDO" title="Undo last move"/>
         </div>
-        <div id="showMovesHistoryButton">
+        <div id="showMovesHistoryButton" class="button">
             <img src='<spring:url value="/img/list.png"/>' alt="List icon" title="Show moves history"/>
         </div>
     </div>
     <div><ul>TODO:
-        <li>Showing/hidding moves history</li>
         <li>Locking board after game is finished</li>
         <li>Fireworks for winning player</li>
         <li>Return no boards for games list</li>

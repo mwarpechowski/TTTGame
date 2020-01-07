@@ -120,13 +120,6 @@
     padding: 10px;
 }
 
-#movesListBox .move_O {
-}
-
-#movesListBox .move_X {
-    background-color: gainsboro;
-}
-
 #gameConfigInfo .playerName {
     margin: auto;
     padding: 0.5em;
@@ -228,6 +221,14 @@
     background-color: gainsboro;
 }
 
-.moveListItem.hover {
-    background-color: gray;
+#movesHistory li:nth-child(even) {
+    background-color: gainsboro;
+}
+
+#movesHistory li.hover {
+    background-color: silver;
+}
+
+#movesHistory span {
+    padding-left: 0.5em;
 }

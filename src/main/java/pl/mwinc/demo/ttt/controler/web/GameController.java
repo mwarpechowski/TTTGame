@@ -83,6 +83,6 @@ public class GameController {
                 .map(moveMapper::toView)
                 .collect(Collectors.toList());
         model.addAttribute("moves", moves);
-        return "Moves";
+        return "private/movesHistory";
     }
 }
