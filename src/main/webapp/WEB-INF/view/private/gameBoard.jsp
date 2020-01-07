@@ -17,18 +17,17 @@
         </span>
     </div>
     <div id="gameControls">
-        <div id="hideAxisButton">
-            <img src='<spring:url value="/img/axis.png"/>' alt="Axis" title="Show axis">
+        <div id="hideAxesButton" class="button">
+            <img src='<spring:url value="/img/axes.png"/>' alt="Axes icon" title="Show axes">
         </div>
-        <div id="undoMoveButton" onclick="undoLastMove()">
+        <div id="undoLastMoveButton" onclick="undoLastMove()">
             <img src='<spring:url value="/img/undo.png"/>' alt="UNDO" title="Undo last move"/>
         </div>
-        <div id="undoLastMoveButton">
+        <div id="showMovesHistoryButton">
             <img src='<spring:url value="/img/list.png"/>' alt="List icon" title="Show moves history"/>
         </div>
     </div>
     <div><ul>TODO:
-        <li>Showing/hiding axis</li>
         <li>Showing/hidding moves history</li>
         <li>Undo move button</li>
         <li>Locking board after game is finished</li>

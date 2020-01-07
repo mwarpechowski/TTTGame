@@ -81,9 +81,14 @@
     margin: auto;
 }
 
-.deleteButton:hover {
-    border: 1px solid black;
+.button {
     cursor: pointer;
+    padding: 1px;
+}
+
+.button:hover {
+    border: 1px solid black;
+    padding: 0;
 }
 
 #gamesTable {
@@ -191,6 +196,10 @@
     display: inline-block;
 }
 
+.hidden {
+    display: none;
+}
+
 .boardField {
     cursor: pointer;
     min-width: 1em;
@@ -216,9 +225,9 @@
 }
 
 .boardField.hover {
-    background-color: navy;
+    background-color: gainsboro;
 }
 
 .moveListItem.hover {
-    background-color: blue;
+    background-color: gray;
 }

@@ -41,7 +41,7 @@
                 <td>
                         <img src='<spring:url value="/img/delete_cross.png"/>' alt="Delete" about="Picture taken from HiClipart.com"
                              title="Delete"
-                             class="deleteButton"
+                             class="deleteButton button"
                              data-gameid="${game.id}">
                 </td>
             </tr>

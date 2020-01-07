@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     initBoardTableEventHandlers();
+    initGameControlsEventHandlers();
     updateGameStatus(gameId);
 });
 
@@ -9,6 +10,10 @@ function initBoardTableEventHandlers() {
     $('tr').on('click', '.boardField:not(".X, .O, .disabled")', handleBoardFieldClicked);
     $('tr').on('mouseenter', '.boardField:not(".X, .O, .disabled")', handleBoardFieldMouseenter);
     $('tr').on('mouseleave', '.boardField:not(".X, .O, .disabled")', handleBoardFieldMouseleave);
+}
+
+function initGameControlsEventHandlers() {
+    $('#hideAxesButton').on('click', toggleBoardAxes);
 }
 
 function enableBoardTable() {
@@ -22,7 +27,6 @@ function disableBoardTable() {
 function handleBoardFieldClicked(event) {
     var col = $(this).data('col');
     var row = $(this).data('row');
-//    var gameId = $('#gameBoardTable').data('gameid');
     movePerformed(gameId, col, row);
 }
 
@@ -32,6 +36,11 @@ function handleBoardFieldMouseenter(event) {
 
 function handleBoardFieldMouseleave(event) {
     $(this).removeClass("hover");
+}
+
+function toggleBoardAxes(event) {
+    $('.boardVerticalAxis').toggleClass("hidden");
+    $('.boardHorizontalAxis').toggleClass("hidden");
 }
 
 
