@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.mwinc.demo.ttt.controler.api.GameCreateRequest;
@@ -32,6 +33,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static pl.mwinc.demo.ttt.StaticGlobalConfig.GAME_ID_MIN;
@@ -55,11 +57,13 @@ public class ApiGameController {
     private MoveService moveService;
 
     @GetMapping()
-    public Set<GameView> getAllGames() {
+    public Set<GameView> getAllGames(@RequestParam(value = "simple", defaultValue = "false", required = false) Boolean simpleView) {
         try {
-            LOGGER.info("Get all games invoked");
+            LOGGER.info("Get all games invoked; simple={}", simpleView);
+            Function<Game, GameView> viewMapper = simpleView ? g -> gameMapper.toSimpleView(g)
+                    : g -> gameMapper.toView(g);
             return gameService.fetchAll().stream()
-                    .map(gameMapper::toView)
+                    .map(viewMapper)
                     .collect(Collectors.toSet());
         } catch (Exception ex) {
             LOGGER.error("Failed to fetch games", ex);

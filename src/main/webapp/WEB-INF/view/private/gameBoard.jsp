@@ -30,7 +30,6 @@
     <div><ul>TODO:
         <li>Locking board after game is finished</li>
         <li>Fireworks for winning player</li>
-        <li>Return no boards for games list</li>
         <li>New Game form improvements
             <ul>
                 <li>Hide board size input</li>

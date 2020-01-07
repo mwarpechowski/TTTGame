@@ -19,6 +19,7 @@ import pl.mwinc.demo.ttt.service.GameService;
 import pl.mwinc.demo.ttt.service.MoveService;
 import pl.mwinc.demo.ttt.view.GameView;
 import pl.mwinc.demo.ttt.view.MoveView;
+import pl.mwinc.demo.ttt.view.SimpleGameView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -48,9 +49,9 @@ public class GameController {
 
     @GetMapping
     public String fetchAllGames(Model model) {
-        List<GameView> games = gameService.fetchAll().stream()
-                .map(gameMapper::toView)
-                .sorted(Comparator.comparingLong(GameView::getId))
+        List<SimpleGameView> games = gameService.fetchAll().stream()
+                .map(gameMapper::toSimpleView)
+                .sorted(Comparator.comparingLong(SimpleGameView::getId))
                 .collect(Collectors.toList());
         model.addAttribute("games", games);
         return "JoinGame";

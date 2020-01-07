@@ -20,5 +20,4 @@ public class GameView {
     private PlayerSymbol currentPlayer;
     private boolean finished;
     private PlayerSymbol winner;
-    private BoardView board;
 }
