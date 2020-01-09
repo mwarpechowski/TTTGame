@@ -3,6 +3,7 @@ package pl.mwinc.demo.ttt.model.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.mwinc.demo.ttt.StaticGlobalConfig;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -34,7 +36,8 @@ public class GameEntity {
     @Column(nullable = false)
     private int boardSize;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false, length = StaticGlobalConfig.BOARD_SIZE_MAX * StaticGlobalConfig.BOARD_SIZE_MAX)
     private String board;
 
     @Column(nullable = false)

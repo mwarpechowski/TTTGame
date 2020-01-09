@@ -36,7 +36,6 @@
                 <li>Validation</li>
             </ul>
         </li>
-        <li>Fix DB - saving board bigger than 255 fails</li>
         <li>Resizing board
             <ul>
                 <li>Add Slider for resizing</li>
