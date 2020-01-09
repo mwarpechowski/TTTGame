@@ -29,6 +29,7 @@ function updateGameStatus(){
         url: contextPath + '/api/game/' + gameId + '/status',
         success: function(msg) {
             markCurrentPlayer(msg.currentPlayer);
+            lockBoardTable(msg.finished);
         }
     });
 }
@@ -36,6 +37,14 @@ function updateGameStatus(){
 function markCurrentPlayer(symbol) {
     $('.playerName.current').removeClass('current');
     $('#player'+symbol).addClass('current');
+}
+
+function lockBoardTable(doLock) {
+    if(doLock){
+        disableBoardTable();
+    } else {
+        enableBoardTable();
+    }
 }
 
 function enableBoardTable() {

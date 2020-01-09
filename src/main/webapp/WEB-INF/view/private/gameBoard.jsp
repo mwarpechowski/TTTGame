@@ -28,7 +28,6 @@
         </div>
     </div>
     <div><ul>TODO:
-        <li>Locking board after game is finished</li>
         <li>Fireworks for winning player</li>
         <li>New Game form improvements
             <ul>
