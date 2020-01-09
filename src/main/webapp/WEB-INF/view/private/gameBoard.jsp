@@ -45,6 +45,7 @@
             </ul>
         </li>
         <li>Saving preferences in cookies</li>
+        <li>Marking move effects (predicting)</li>
     </ul></div>
     <t:boardtable model="${game.board}"/>
 </div>

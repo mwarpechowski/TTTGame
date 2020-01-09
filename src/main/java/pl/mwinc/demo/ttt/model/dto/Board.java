@@ -42,11 +42,28 @@ public class Board {
     }
 
     public Optional<PlayerSymbol> getField(Position position) {
-        return getBoardField(position).getContent();
+        if( isPositionOnBoard(position)){
+            return getBoardField(position).getContent();
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<PlayerSymbol> getField(int row, int col) {
-        return getBoardField(row, col).getContent();
+        if( isPositionOnBoard(row, col)){
+            return getBoardField(row, col).getContent();
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    private boolean isPositionOnBoard(Position p){
+        return isPositionOnBoard(p.getRow(), p.getCol());
+    }
+
+    private boolean isPositionOnBoard(int row, int col){
+        return row >= 0 && row < rows.size()
+                && col >= 0 && col < rows.size(); // <- valid because board is square
     }
 
     private BoardField getBoardField(Position p) {
@@ -138,5 +155,13 @@ public class Board {
             }
             return new Board(parsedRows);
         }
+    }
+
+
+    public enum Line {
+        HORIZONTAL,
+        VERTICAL,
+        FALLING,
+        RISING
     }
 }

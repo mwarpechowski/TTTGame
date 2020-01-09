@@ -15,7 +15,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 class BoardTest {
 
     @Test
-    public void whenCreatNewBoard_ShouldHaveGivenSize() {
+    public void whenCreateNewBoard_ShouldHaveGivenSize() {
         // given
         int size = 3;
 
@@ -62,7 +62,7 @@ class BoardTest {
     }
 
     @Test
-    public void settingFiledSecondTime_shouldResultInException() {
+    public void settingFieldSecondTime_shouldResultInException() {
         Assertions.assertThrows(Board.FieldAlreadySetException.class, () -> {
             // given
             Board board = new Board(3);
@@ -76,4 +76,16 @@ class BoardTest {
         });
     }
 
+    @Test
+    public void fetchingFieldOutsideBoard_shouldReturnEmpty() {
+        // given
+        Board board = new Board(3);
+        Position position = Position.builder().row(3).col(3).build();
+
+        // when
+        Optional<PlayerSymbol> result = board.getField(position);
+
+        // then
+        assertThat(result.isPresent(), is(false));
+    }
 }

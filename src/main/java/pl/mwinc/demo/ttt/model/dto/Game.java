@@ -10,6 +10,7 @@ import pl.mwinc.demo.ttt.controler.exception.GameAlreadyFinishedException;
 import pl.mwinc.demo.ttt.controler.exception.InvalidMoveException;
 import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
+import pl.mwinc.demo.ttt.model.dto.util.BoardAnalyzer;
 
 import java.time.ZonedDateTime;
 
@@ -17,7 +18,6 @@ import static pl.mwinc.demo.ttt.controler.exception.InvalidMoveException.TEMPLAT
 
 /*
  * Todo:
- *  * Checking if game is finished: final move detection, setting winner, etc...
  *  * Extendible board: when initial board size not given create small board and extend on move close to the border
  */
 @Builder
@@ -38,7 +38,7 @@ public class Game {
 
     public void validate(Move move) throws InvalidMoveException, UnacceptableMoveException {
         LOGGER.debug("Validating {}", move);
-        if (status.isFinished() ){
+        if (status.isFinished()) {
             throw new GameAlreadyFinishedException();
         }
         if (move.getPosition().getRow() >= board.getSize()) {
@@ -57,18 +57,39 @@ public class Game {
         movesCounter = ++movesCounter;
         move.setSeqNumber(movesCounter);
         board.apply(move);
-        changeCurrentPlayer();
+        updateGameStatus(move);
         LOGGER.debug("{} accepted {}", this, move);
         return move;
     }
 
-    public void undo(Move move){
+    public void undo(Move move) {
         LOGGER.debug("{} reverting {}", this, move);
         board.unset(move.getPosition());
         movesCounter = --movesCounter;
         status.setWinner(null);
-        changeCurrentPlayer();
+        status.setFinished(false);
+        status.setCurrentPlayer(move.getSymbol());
         LOGGER.debug("{} reverted {}", this, move);
+    }
+
+    private void updateGameStatus(Move lastMove) {
+        if (isWinningMove(lastMove)) {
+            status.setFinished(true);
+            status.setWinner(lastMove.getSymbol());
+        } else if (isBoardFull()) {
+            status.setFinished(true);
+        } else {
+            changeCurrentPlayer();
+        }
+    }
+
+    private boolean isWinningMove(Move move) {
+        return BoardAnalyzer.getAlignedMoves(board, move.getPosition()).values().stream()
+                .anyMatch(line -> line.size() >= winningLength);
+    }
+
+    private boolean isBoardFull() {
+        return movesCounter >= board.getSize() * board.getSize();
     }
 
     private void changeCurrentPlayer() {
