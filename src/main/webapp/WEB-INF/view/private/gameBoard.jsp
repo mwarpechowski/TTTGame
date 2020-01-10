@@ -28,14 +28,8 @@
         </div>
     </div>
     <div><ul>TODO:
+        <li>Add dynamic board size support</li>
         <li>Fireworks for winning player</li>
-        <li>New Game form improvements
-            <ul>
-                <li>Hide board size input</li>
-                <li>Add dynamic board size support</li>
-                <li>Validation</li>
-            </ul>
-        </li>
         <li>Resizing board
             <ul>
                 <li>Add Slider for resizing</li>
