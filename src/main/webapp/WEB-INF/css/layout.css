@@ -120,6 +120,10 @@
     padding: 10px;
 }
 
+#gameConfigInfo {
+    display: flex;
+}
+
 #gameConfigInfo .playerName {
     margin: auto;
     padding: 0.5em;
@@ -146,7 +150,7 @@
 }
 
 #gameBoardBox div {
-    display: flex;
+/*    display: flex; */
     margin: auto;
 }
 
@@ -219,6 +223,23 @@
 
 .boardField.hover {
     background-color: gainsboro;
+}
+
+#gameBoardResizeSliderWrapper, #gameBoardResizeSliderWrapper label {
+    display:block;
+}
+
+#gameBoardResizeSliderWrapper div {
+    display: flex;
+}
+
+#gameBoardResizeSlider {
+     width: 100%;
+}
+
+#gameBoardResizeSliderWrapper #gameBoardSizeValue {
+    width: 3em;
+    margin-left: auto;
 }
 
 #movesHistory li:nth-child(even) {

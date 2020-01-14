@@ -30,14 +30,9 @@
     <div><ul>TODO:
         <li>Add dynamic board size support</li>
         <li>Fireworks for winning player</li>
-        <li>Resizing board
-            <ul>
-                <li>Add Slider for resizing</li>
-                <li>Add resize finction</li>
-            </ul>
-        </li>
         <li>Saving preferences in cookies</li>
         <li>Marking move effects (predicting)</li>
+        <li>Fix naming conventions in backend</li>
     </ul></div>
     <t:boardtable model="${game.board}"/>
 </div>

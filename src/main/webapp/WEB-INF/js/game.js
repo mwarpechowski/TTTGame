@@ -4,6 +4,7 @@ $(document).ready(function () {
     initBoardTableEventHandlers();
     initGameControlsEventHandlers();
     initMovesHistoryEventHandlers();
+    initBoardResizeSlider();
     updateGameStatus();
 });
 
@@ -21,6 +22,13 @@ function initGameControlsEventHandlers() {
 function initMovesHistoryEventHandlers() {
     $("#rightSidebarBox").on('mouseenter', '#movesHistory li', handleMovesHistoryItemMouseenter);
     $("#rightSidebarBox").on('mouseleave', '#movesHistory li', handleMovesHistoryItemMouseleave);
+}
+
+function initBoardResizeSlider() {
+    $("#gameBoardResizeSlider").on('input change', handleBoardResize);
+    $("#gameBoardResizeSlider").attr("min", parseInt($('.boardField').css("min-width"),10) * 100);
+    $("#gameBoardResizeSlider").attr("max", parseInt($('.boardField').css("max-width"),10) * 100);
+    $("#gameBoardResizeSlider").attr("value", parseInt($('.boardField').css("width"),10) * 100);
 }
 
 function updateGameStatus(){
@@ -79,6 +87,19 @@ function handleMovesHistoryItemMouseleave(event) {
     $(this).removeClass("hover");
     var boardFieldId = '#boardField_' + $(this).attr('data-col') + '_' + $(this).attr('data-row');
     $(boardFieldId).removeClass("hover");
+}
+
+function handleBoardResize(event) {
+    var newValue = event.target.value;
+    var minValue = event.target.getAttribute("min");
+    var maxValue = event.target.getAttribute("max");
+    var cssMax = parseFloat($(".boardField").css("max-width"), 10);
+    var newSize = cssMax * newValue / maxValue;
+    var displayedSize = Math.round(newValue / minValue *100) + '%';
+    $(".boardField").css("width", newSize);
+    $(".boardHorizontalAxis:not(.boardVerticalAxis)").css("width", newSize);
+    $(".boardField").css("padding-bottom", "calc(" + newSize + "px - 1em)");
+    $("#gameBoardSizeValue").html(displayedSize);
 }
 
 function toggleBoardAxes(event) {

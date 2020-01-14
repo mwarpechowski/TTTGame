@@ -24,3 +24,10 @@
     </tbody>
 </table>
 </div>
+<div id="gameBoardResizeSliderWrapper">
+    <label class="label" for="gameBoardResizeSlider">Scale board:</label>
+    <div>
+        <input id="gameBoardResizeSlider" type="range" min="1" max="9" step="1" value="9">
+        <span id="gameBoardSizeValue">900%</span>
+    </div>
+</div>
