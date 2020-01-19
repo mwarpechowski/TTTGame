@@ -68,6 +68,13 @@
     margin-top: auto;
 }
 
+.gameFinished_true {
+    background-image: url("../img/green_check.png");
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .deleteButtonBox {
     background-image: url("../img/delete_cross.png");
     background-size: auto 100%;
