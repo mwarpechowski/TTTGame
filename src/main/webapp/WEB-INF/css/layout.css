@@ -151,6 +151,7 @@
 
 #gameBoardBox div {
 /*    display: flex; */
+
     margin: auto;
 }
 
@@ -252,4 +253,50 @@
 
 #movesHistory span {
     padding-left: 0.5em;
+}
+
+@keyframes winner {
+    100% {transform: rotate(1turn);}
+}
+
+.winner {
+    position: relative;
+    border-radius: 10px;
+	overflow: hidden;
+	z-index: 0;
+}
+
+.winner::before {
+    position: absolute;
+    content: '';
+    left: -25%;
+    top: -50%;
+    width: 150%;
+    height: 200%;
+    z-index: -2;
+    /* Define animation */
+    background-color: #gray;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0,
+                         100% 0,
+                         100% 100%,
+                         0 100%;
+    background-image: linear-gradient(white, black),
+                      linear-gradient(white, white),
+                      linear-gradient(black, white),
+                      linear-gradient(white, white);
+    animation: winner 5s linear infinite;
+}
+
+.winner::after {
+    position: absolute;
+    content: '';
+    left: 5px;
+    top: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    z-index: -1;
+    background: white;
+    border-radius: 5px;
 }
