@@ -6,6 +6,7 @@ $(document).ready(function () {
     initMovesHistoryEventHandlers();
     initBoardResizeSlider();
     updateGameStatus();
+    loadSavedPageSettings();
 });
 
 function initBoardTableEventHandlers() {
@@ -26,9 +27,8 @@ function initMovesHistoryEventHandlers() {
 
 function initBoardResizeSlider() {
     $("#gameBoardResizeSlider").on('input change', handleBoardResize);
-    $("#gameBoardResizeSlider").attr("min", parseInt($('.boardField').css("min-width"),10) * 100);
-    $("#gameBoardResizeSlider").attr("max", parseInt($('.boardField').css("max-width"),10) * 100);
-    $("#gameBoardResizeSlider").attr("value", parseInt($('.boardField').css("width"),10) * 100);
+    $("#gameBoardResizeSlider").attr("min", parseInt($('.boardField').css("min-width"),10));
+    $("#gameBoardResizeSlider").attr("max", parseInt($('.boardField').css("max-width"),10));
 }
 
 function updateGameStatus(){
@@ -69,6 +69,20 @@ function disableBoardTable() {
     $('.boardField').addClass("disabled");
 }
 
+function loadSavedPageSettings() {
+    if(JSON.parse(sessionStorage.getItem("hideBoardAxes"))) {
+        toggleHiddenClassToBoardAxes();
+    }
+    if(JSON.parse(sessionStorage.getItem("showMovesHistory"))){
+        fetchMovesHistory();
+    }
+    var boardSize = sessionStorage.getItem("game_"+gameId+"_boardSize");
+    if(!boardSize){
+        boardSize = parseInt($('.boardField').css("width"),10);
+    }
+    setNewBoardSize(boardSize);
+}
+
 function handleBoardFieldClicked(event) {
     var col = $(this).data('col');
     var row = $(this).data('row');
@@ -97,18 +111,26 @@ function handleMovesHistoryItemMouseleave(event) {
 
 function handleBoardResize(event) {
     var newValue = event.target.value;
-    var minValue = event.target.getAttribute("min");
-    var maxValue = event.target.getAttribute("max");
-    var cssMax = parseFloat($(".boardField").css("max-width"), 10);
-    var newSize = cssMax * newValue / maxValue;
+    setNewBoardSize(newValue);
+    sessionStorage.setItem("game_"+gameId+"_boardSize", newValue);
+}
+
+function setNewBoardSize(newValue) {
+    var minValue = $('#gameBoardResizeSlider').attr("min");
     var displayedSize = Math.round(newValue / minValue *100) + '%';
-    $(".boardField").css("width", newSize);
-    $(".boardHorizontalAxis:not(.boardVerticalAxis)").css("width", newSize);
-    $(".boardField").css("padding-bottom", "calc(" + newSize + "px - 1em)");
+    $(".boardField").css("width", newValue);
+    $(".boardHorizontalAxis:not(.boardVerticalAxis)").css("width", newValue);
+    $(".boardField").css("padding-bottom", "calc(" + newValue + "px - 1em)");
     $("#gameBoardSizeValue").html(displayedSize);
+    $("#gameBoardResizeSlider").val(newValue);
 }
 
 function toggleBoardAxes(event) {
+    toggleHiddenClassToBoardAxes();
+    sessionStorage.setItem("hideBoardAxes", $('.boardHorizontalAxis').hasClass("hidden"));
+}
+
+function toggleHiddenClassToBoardAxes() {
     $('.boardVerticalAxis').toggleClass("hidden");
     $('.boardHorizontalAxis').toggleClass("hidden");
 }
@@ -192,8 +214,10 @@ function removeEntryFromMovesHistory(move) {
 function toggleMovesHistory(event) {
     if ($("#movesHistoryBox").length) {
         $("#movesHistoryBox").remove();
+        sessionStorage.setItem("showMovesHistory", false);
     } else {
         fetchMovesHistory();
+        sessionStorage.setItem("showMovesHistory", true);
     }
 }
 

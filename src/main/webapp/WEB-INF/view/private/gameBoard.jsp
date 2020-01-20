@@ -28,10 +28,10 @@
         </div>
     </div>
     <div><ul>TODO:
-        <li>Add dynamic board size support</li>
-        <li>Saving preferences in cookies or session variables</li>
-        <li>Marking move effects (predicting)</li>
         <li>Fix naming conventions in backend</li>
+        <li>Add dynamic board size support</li>
+        <li>Fix logo and status check mark</li>
+        <li>Marking move effects (predicting)</li>
     </ul></div>
     <t:boardtable model="${game.board}"/>
 </div>
