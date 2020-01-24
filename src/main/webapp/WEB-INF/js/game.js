@@ -35,10 +35,10 @@ function updateGameStatus(){
     $.ajax({
         method: 'GET',
         url: contextPath + '/api/game/' + gameId + '/status',
-        success: function(msg) {
-            markCurrentPlayer(msg.currentPlayer);
-            markWinner(msg.winner);
-            lockBoardTable(msg.finished);
+        success: function(status) {
+            markCurrentPlayer(status.currentPlayer);
+            markWinner(status.winner);
+            lockBoardTable(status.finished);
         }
     });
 }

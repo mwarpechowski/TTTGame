@@ -1,11 +1,8 @@
-package pl.mwinc.demo.ttt.model.mapper;
+package pl.mwinc.demo.ttt.model.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.model.dto.Move;
-import pl.mwinc.demo.ttt.model.dto.Position;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

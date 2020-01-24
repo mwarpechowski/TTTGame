@@ -30,7 +30,7 @@
                 </td>
                 <td><span id="${game.id}_playerXName" class="playerName"><c:out value="${game.playerX}"/></span></td>
                 <td><span id="${game.id}_playerOName" class="playerName"><c:out value="${game.playerO}"/></span></td>
-                <td class="gameFinished_${game.finished}"></td>
+                <td class="gameFinished_${game.status.finished}"></td>
                 <td>
                         <img src='<spring:url value="/img/delete_cross.png"/>' alt="Delete" about="Picture taken from HiClipart.com"
                              title="Delete"

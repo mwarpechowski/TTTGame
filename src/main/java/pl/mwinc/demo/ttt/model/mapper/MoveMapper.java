@@ -2,9 +2,9 @@ package pl.mwinc.demo.ttt.model.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.mwinc.demo.ttt.model.domain.MoveEntity;
-import pl.mwinc.demo.ttt.model.dto.Move;
-import pl.mwinc.demo.ttt.view.MoveView;
+import pl.mwinc.demo.ttt.model.jpa.MoveEntity;
+import pl.mwinc.demo.ttt.model.domain.Move;
+import pl.mwinc.demo.ttt.dto.MoveView;
 
 @Mapper(componentModel = "spring",
         uses = PlayerMapper.class)
@@ -12,7 +12,7 @@ public interface MoveMapper {
 
     @Mapping(source = "moveId.gameId", target = "gameId")
     @Mapping(source = "moveId.seqNumber", target = "seqNumber")
-    Move toDto(MoveEntity moveEntity);
+    Move toDomain(MoveEntity moveEntity);
 
     @Mapping(source = "gameId", target = "moveId.gameId")
     @Mapping(source = "seqNumber", target = "moveId.seqNumber")

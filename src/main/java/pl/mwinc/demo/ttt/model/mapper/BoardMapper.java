@@ -2,8 +2,8 @@ package pl.mwinc.demo.ttt.model.mapper;
 
 import org.mapstruct.Mapper;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.view.BoardView;
+import pl.mwinc.demo.ttt.model.domain.Board;
+import pl.mwinc.demo.ttt.dto.BoardView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public abstract class BoardMapper {
         return Board.Marshaller.marshal(board);
     }
 
-    public Board toDto(String marshalled) {
+    public Board toDomain(String marshalled) {
         return Board.Marshaller.unmarshal(marshalled);
     }
 

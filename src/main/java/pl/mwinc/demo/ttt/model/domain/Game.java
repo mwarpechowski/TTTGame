@@ -1,4 +1,4 @@
-package pl.mwinc.demo.ttt.model.dto;
+package pl.mwinc.demo.ttt.model.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import pl.mwinc.demo.ttt.controler.exception.GameAlreadyFinishedException;
 import pl.mwinc.demo.ttt.controler.exception.InvalidMoveException;
 import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
-import pl.mwinc.demo.ttt.model.dto.util.BoardAnalyzer;
+import pl.mwinc.demo.ttt.model.domain.util.BoardAnalyzer;
 
 import java.time.ZonedDateTime;
 

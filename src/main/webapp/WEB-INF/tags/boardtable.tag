@@ -1,7 +1,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib tagdir = "/WEB-INF/tags" prefix="t" %>
 <%@ tag description="Template of game board" pageEncoding="UTF-8" %>
-<%@ attribute name="model" type="pl.mwinc.demo.ttt.view.BoardView" required="true" %>
+<%@ attribute name="model" type="pl.mwinc.demo.ttt.dto.BoardView" required="true" %>
 
 <div id="gameBoardTableWrap">
 <table id="gameBoardTable">

@@ -1,4 +1,4 @@
-package pl.mwinc.demo.ttt.model.domain;
+package pl.mwinc.demo.ttt.model.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

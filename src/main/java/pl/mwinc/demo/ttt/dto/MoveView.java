@@ -1,4 +1,4 @@
-package pl.mwinc.demo.ttt.view;
+package pl.mwinc.demo.ttt.dto;
 
 import lombok.Getter;
 import lombok.Setter;

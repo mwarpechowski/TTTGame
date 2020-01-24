@@ -1,8 +1,8 @@
-package pl.mwinc.demo.ttt.model.dto.util;
+package pl.mwinc.demo.ttt.model.domain.util;
 
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.model.dto.Position;
+import pl.mwinc.demo.ttt.model.domain.Board;
+import pl.mwinc.demo.ttt.model.domain.Position;
 
 import java.util.Collections;
 import java.util.EnumMap;

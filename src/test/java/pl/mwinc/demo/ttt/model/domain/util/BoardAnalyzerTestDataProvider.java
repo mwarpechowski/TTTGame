@@ -1,8 +1,8 @@
-package pl.mwinc.demo.ttt.model.dto.util;
+package pl.mwinc.demo.ttt.model.domain.util;
 
 import org.junit.jupiter.params.provider.Arguments;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.model.dto.Position;
+import pl.mwinc.demo.ttt.model.domain.Board;
+import pl.mwinc.demo.ttt.model.domain.Position;
 
 import java.util.EnumMap;
 import java.util.HashSet;

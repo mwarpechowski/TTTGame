@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.mwinc.demo.ttt.controler.exception.MoveNotFoundException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.dao.GameDAO;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.model.dto.Game;
-import pl.mwinc.demo.ttt.model.dto.GameStatus;
-import pl.mwinc.demo.ttt.model.dto.Move;
-import pl.mwinc.demo.ttt.model.dto.Player;
+import pl.mwinc.demo.ttt.model.domain.Board;
+import pl.mwinc.demo.ttt.model.domain.Game;
+import pl.mwinc.demo.ttt.model.domain.GameStatus;
+import pl.mwinc.demo.ttt.model.domain.Move;
+import pl.mwinc.demo.ttt.model.domain.Player;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
 import pl.mwinc.demo.ttt.service.exception.DbOperationFailedException;
 
@@ -39,14 +39,14 @@ public class GameService {
 
     public Set<Game> fetchAll() {
         return gameDAO.findAll().stream()
-                .map(gameMapper::toDto)
+                .map(gameMapper::toDomain)
                 .collect(Collectors.toSet());
     }
 
     public Optional<Game> fetch(Long gameId) {
         return Optional.of(gameId)
                 .map(gameDAO::findOne)
-                .map(gameMapper::toDto);
+                .map(gameMapper::toDomain);
     }
 
     public Game save(Game game) {
@@ -54,7 +54,7 @@ public class GameService {
         Game saved = Optional.of(game)
                 .map(gameMapper::toEntity)
                 .map(gameDAO::save)
-                .map(gameMapper::toDto)
+                .map(gameMapper::toDomain)
                 .orElseThrow(() -> new DbOperationFailedException("Failed to save game!"));
         game.setId(saved.getId());
         LOGGER.info("Saved game: {}", saved);

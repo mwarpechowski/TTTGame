@@ -3,8 +3,8 @@ package pl.mwinc.demo.ttt.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.mwinc.demo.ttt.model.dao.MoveDAO;
-import pl.mwinc.demo.ttt.model.domain.MoveId;
-import pl.mwinc.demo.ttt.model.dto.Move;
+import pl.mwinc.demo.ttt.model.jpa.MoveId;
+import pl.mwinc.demo.ttt.model.domain.Move;
 import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
 import pl.mwinc.demo.ttt.service.exception.DbOperationFailedException;
 
@@ -26,12 +26,12 @@ public class MoveService {
         MoveId id = MoveId.builder().gameId(gameId).seqNumber(seqNumber).build();
         return Optional.of(id)
                 .map(moveDAO::findOne)
-                .map(moveMapper::toDto);
+                .map(moveMapper::toDomain);
     }
 
     public List<Move> fetchAll(Long gameId){
         return moveDAO.findByMoveIdGameId(gameId).stream()
-                .map(moveMapper::toDto)
+                .map(moveMapper::toDomain)
                 .sorted(Comparator.comparingLong(Move::getSeqNumber))
                 .collect(Collectors.toList());
     }
@@ -40,7 +40,7 @@ public class MoveService {
         return Optional.ofNullable(move)
                 .map(moveMapper::toEntity)
                 .map(moveDAO::save)
-                .map(moveMapper::toDto)
+                .map(moveMapper::toDomain)
                 .orElseThrow(() -> new DbOperationFailedException("Failed to save move!"));
     }
 

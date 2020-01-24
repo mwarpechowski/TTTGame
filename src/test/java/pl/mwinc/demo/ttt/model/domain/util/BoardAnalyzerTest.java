@@ -1,10 +1,10 @@
-package pl.mwinc.demo.ttt.model.dto.util;
+package pl.mwinc.demo.ttt.model.domain.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.mwinc.demo.ttt.model.dto.Board;
-import pl.mwinc.demo.ttt.model.dto.Position;
+import pl.mwinc.demo.ttt.model.domain.Board;
+import pl.mwinc.demo.ttt.model.domain.Position;
 
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +18,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 class BoardAnalyzerTest {
 
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource("pl.mwinc.demo.ttt.model.dto.util.BoardAnalyzerTestDataProvider#provideBoardsToAnalyze")
+    @MethodSource("pl.mwinc.demo.ttt.model.domain.util.BoardAnalyzerTestDataProvider#provideBoardsToAnalyze")
     void getAlignedMoves(String testTitle, Board board, Position crossing, Map<Board.Line, Set<Position>> expected) {
         Map<Board.Line, Set<Position>> result = BoardAnalyzer.getAlignedMoves(board, crossing);
 

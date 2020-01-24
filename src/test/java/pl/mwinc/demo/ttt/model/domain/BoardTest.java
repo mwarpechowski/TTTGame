@@ -1,4 +1,4 @@
-package pl.mwinc.demo.ttt.model.dto;
+package pl.mwinc.demo.ttt.model.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.mwinc.demo.ttt.controler.api.GameCreateRequest;
 import pl.mwinc.demo.ttt.controler.api.NewMoveRequest;
 import pl.mwinc.demo.ttt.controler.exception.GameNotFoundException;
-import pl.mwinc.demo.ttt.model.dto.Game;
-import pl.mwinc.demo.ttt.model.dto.GameStatus;
-import pl.mwinc.demo.ttt.model.dto.Move;
-import pl.mwinc.demo.ttt.model.dto.Position;
+import pl.mwinc.demo.ttt.dto.GameStatusView;
+import pl.mwinc.demo.ttt.dto.GameView;
+import pl.mwinc.demo.ttt.dto.MoveView;
+import pl.mwinc.demo.ttt.model.domain.Game;
+import pl.mwinc.demo.ttt.model.domain.Move;
+import pl.mwinc.demo.ttt.model.domain.Position;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
+import pl.mwinc.demo.ttt.model.mapper.GameStatusMapper;
 import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
 import pl.mwinc.demo.ttt.service.GameService;
 import pl.mwinc.demo.ttt.service.MoveService;
-import pl.mwinc.demo.ttt.view.GameView;
-import pl.mwinc.demo.ttt.view.MoveView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -49,6 +50,9 @@ public class ApiGameController {
 
     @Autowired
     private GameMapper gameMapper;
+
+    @Autowired
+    private GameStatusMapper gameStatusMapper;
 
     @Autowired
     private MoveMapper moveMapper;
@@ -105,11 +109,13 @@ public class ApiGameController {
     }
 
     @GetMapping(path = "/{gameId}/status")
-    public GameStatus getGameStatus(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId) {
+    public GameStatusView getGameStatus(@Valid @Min(GAME_ID_MIN) @PathVariable("gameId") Long gameId) {
         LOGGER.debug("Get game(id={}) status invoked", gameId);
-        Game game = gameService.fetch(gameId)
+        GameStatusView statusView = gameService.fetch(gameId)
+                .map(Game::getStatus)
+                .map(gameStatusMapper::toView)
                 .orElseThrow(GameNotFoundException::new);
-        return game.getStatus();
+        return statusView;
     }
 
     @GetMapping(path = "/{gameId}/move")

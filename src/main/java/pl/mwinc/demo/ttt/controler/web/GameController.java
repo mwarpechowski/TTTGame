@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import pl.mwinc.demo.ttt.controler.api.GameCreateRequest;
 import pl.mwinc.demo.ttt.controler.exception.GameNotFoundException;
-import pl.mwinc.demo.ttt.model.dto.Game;
+import pl.mwinc.demo.ttt.model.domain.Game;
 import pl.mwinc.demo.ttt.model.mapper.GameMapper;
 import pl.mwinc.demo.ttt.model.mapper.MoveMapper;
 import pl.mwinc.demo.ttt.service.GameService;
 import pl.mwinc.demo.ttt.service.MoveService;
-import pl.mwinc.demo.ttt.view.GameView;
-import pl.mwinc.demo.ttt.view.MoveView;
-import pl.mwinc.demo.ttt.view.SimpleGameView;
+import pl.mwinc.demo.ttt.dto.GameView;
+import pl.mwinc.demo.ttt.dto.MoveView;
+import pl.mwinc.demo.ttt.dto.SimpleGameView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;

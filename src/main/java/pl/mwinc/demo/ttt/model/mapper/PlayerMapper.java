@@ -3,8 +3,7 @@ package pl.mwinc.demo.ttt.model.mapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import pl.mwinc.demo.ttt.model.dto.Player;
+import pl.mwinc.demo.ttt.model.domain.Player;
 
 @Mapper(componentModel = "spring")
 public abstract class PlayerMapper {
