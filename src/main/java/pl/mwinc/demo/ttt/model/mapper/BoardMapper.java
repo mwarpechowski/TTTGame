@@ -1,9 +1,10 @@
 package pl.mwinc.demo.ttt.model.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import pl.mwinc.demo.ttt.dto.BoardView;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 import pl.mwinc.demo.ttt.model.domain.Board;
-import pl.mwinc.demo.ttt.dto.BoardView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,18 +21,10 @@ public abstract class BoardMapper {
         return Board.Marshaller.unmarshal(marshalled);
     }
 
-    public BoardView toView(Board board) {
-        if ( board == null ) {
-            return null;
-        }
-        BoardView boardView = new BoardView();
-        boardView.setSize( board.getSize() );
-        boardView.setFields(toFieldsView(board));
+    @Mapping(target = "fields", expression="java(toFieldsView(board))")
+    public abstract BoardView toView(Board board);
 
-        return boardView;
-    }
-
-    private Map<Integer, Map<Integer, PlayerSymbol>> toFieldsView(Board board) {
+    Map<Integer, Map<Integer, PlayerSymbol>> toFieldsView(Board board) {
         final int size = board.getSize();
         Map<Integer, Map<Integer, PlayerSymbol>> rows = new HashMap<>();
         for (int rowNum = 0; rowNum < size; rowNum++) {
