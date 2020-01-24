@@ -22,6 +22,31 @@ To be done
 mvn clean install tomcat7:deploy
 ```
 
+## TODO
+
+### Phase 1
+* Add dynamic board size support
+   * Add requested board margin and force view refresh
+* Marking move effects (predicting)
+* Fix logo and status check mark
+### Phase 2
+* Add swagger for REST API
+* Add running on Docker
+* Add MySQL/PostgreSQL backend
+* Add NoSQL backend (Mongo?, CouchDB?)
+* Add start/stop scripts
+### Phase 3
+* Add network play capabilities:
+  * Players with profiles (unique id, name, stats)
+    * Login in wiht OAuth?
+    * Profile confirmation with email
+  * 'Play again' option with score counting for the game
+  * Score list for a game
+  * High scores view - comparing all players 
+  * Creating game by single player and waiting for other to join
+### Phase 4
+* Metrics collecting and presenting (ELK?, Graphana?, Prometheus?)
+
 ## License
 
 [MIT](LICENSE.md)

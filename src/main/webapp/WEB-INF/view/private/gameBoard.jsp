@@ -27,14 +27,5 @@
             <img src='<spring:url value="/img/list.png"/>' alt="List icon" title="Show moves history"/>
         </div>
     </div>
-    <div><ul>TODO:
-        <li>Add dynamic board size support</li>
-        <li>Fix logo and status check mark</li>
-        <li>Marking move effects (predicting)</li>
-        <li>Add swagger for REST API</li>
-        <li>Add running on Docker</li>
-        <li>Add start/stop scripts</li>
-        <li>Fix README</li>
-    </ul></div>
     <t:boardtable model="${game.board}"/>
 </div>
