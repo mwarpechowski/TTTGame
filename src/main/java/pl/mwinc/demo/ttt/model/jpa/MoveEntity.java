@@ -10,7 +10,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@Entity(name="move")
 @Setter
 @Getter
 @ToString

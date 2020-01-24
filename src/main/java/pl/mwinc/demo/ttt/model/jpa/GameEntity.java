@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import java.time.ZonedDateTime;
 
-@Entity
+@Entity(name="game")
 @Getter
 @Setter
 @ToString
