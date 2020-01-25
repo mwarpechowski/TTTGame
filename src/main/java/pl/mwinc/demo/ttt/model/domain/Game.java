@@ -41,10 +41,7 @@ public class Game {
         if (status.isFinished()) {
             throw new GameAlreadyFinishedException();
         }
-        if (move.getPosition().getRow() >= board.getSize()) {
-            throw new InvalidMoveException(String.format(TEMPLATE_MOVE_OUTSIDE_BOARD, board.getSize() - 1));
-        }
-        if (move.getPosition().getCol() >= board.getSize()) {
+        if (!board.isOnBoard(move.getPosition())) {
             throw new InvalidMoveException(String.format(TEMPLATE_MOVE_OUTSIDE_BOARD, board.getSize() - 1));
         }
         if (move.getSymbol() != status.getCurrentPlayer()) {

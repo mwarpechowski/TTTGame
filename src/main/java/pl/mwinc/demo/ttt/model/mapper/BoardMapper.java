@@ -14,11 +14,11 @@ import java.util.Map;
 public abstract class BoardMapper {
 
     public String toEntity(Board board) {
-        return Board.Marshaller.marshal(board);
+        return BoardMarshaller.marshal(board);
     }
 
     public Board toDomain(String marshalled) {
-        return Board.Marshaller.unmarshal(marshalled);
+        return BoardMarshaller.unmarshal(marshalled);
     }
 
     @Mapping(target = "fields", expression="java(toFieldsView(board))")

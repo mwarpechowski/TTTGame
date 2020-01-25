@@ -3,6 +3,7 @@ package pl.mwinc.demo.ttt.model.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
+import pl.mwinc.demo.ttt.model.mapper.BoardMarshaller;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,7 +22,7 @@ class BoardMarshallerTest {
         board.apply(Move.builder().symbol(PlayerSymbol.O).position(Position.builder().row(2).col(0).build()).build());
 
         // when
-        String result = Board.Marshaller.marshal(board);
+        String result = BoardMarshaller.marshal(board);
 
         // then
         String expected = "" +
@@ -42,7 +43,7 @@ class BoardMarshallerTest {
                 "..X.";
 
         // when
-        Board board = Board.Marshaller.unmarshal(serialized);
+        Board board = BoardMarshaller.unmarshal(serialized);
 
         // then
         assertThat(board, is(notNullValue()));
@@ -77,7 +78,7 @@ class BoardMarshallerTest {
                 "..X.";
 
         // when
-        String marshalled = Board.Marshaller.marshal(Board.Marshaller.unmarshal(serialized));
+        String marshalled = BoardMarshaller.marshal(BoardMarshaller.unmarshal(serialized));
 
         // then
         assertThat(serialized, is(equalTo(marshalled)));
@@ -98,7 +99,7 @@ class BoardMarshallerTest {
                 "..X.";
 
         // when
-        String marshalled = Board.Marshaller.marshal(Board.Marshaller.unmarshal(given));
+        String marshalled = BoardMarshaller.marshal(BoardMarshaller.unmarshal(given));
 
         // then
         assertThat(marshalled, is(equalTo(expected)));
@@ -119,7 +120,7 @@ class BoardMarshallerTest {
                 "..X.";
 
         // when
-        String marshalled = Board.Marshaller.marshal(Board.Marshaller.unmarshal(given));
+        String marshalled = BoardMarshaller.marshal(BoardMarshaller.unmarshal(given));
 
         // then
         assertThat(marshalled, is(equalTo(expected)));
@@ -134,7 +135,7 @@ class BoardMarshallerTest {
                 "O...";
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Board.Marshaller.unmarshal(serialized)
+                BoardMarshaller.unmarshal(serialized)
                 );
     }
 
@@ -148,7 +149,7 @@ class BoardMarshallerTest {
                 ".X.";
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Board.Marshaller.unmarshal(serialized)
+                BoardMarshaller.unmarshal(serialized)
         );
     }
 
@@ -162,7 +163,7 @@ class BoardMarshallerTest {
                 ".X.O";
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Board.Marshaller.unmarshal(serialized)
+                BoardMarshaller.unmarshal(serialized)
         );
     }
 }

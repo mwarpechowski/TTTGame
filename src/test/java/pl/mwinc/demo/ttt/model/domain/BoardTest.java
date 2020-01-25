@@ -2,6 +2,7 @@ package pl.mwinc.demo.ttt.model.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import java.util.Optional;
@@ -63,7 +64,7 @@ class BoardTest {
 
     @Test
     public void settingFieldSecondTime_shouldResultInException() {
-        Assertions.assertThrows(Board.FieldAlreadySetException.class, () -> {
+        Assertions.assertThrows(UnacceptableMoveException.class, () -> {
             // given
             Board board = new Board(3);
             Position position = new Position(1, 1);

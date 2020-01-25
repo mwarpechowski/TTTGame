@@ -3,6 +3,7 @@ package pl.mwinc.demo.ttt.model.domain.util;
 import org.junit.jupiter.params.provider.Arguments;
 import pl.mwinc.demo.ttt.model.domain.Board;
 import pl.mwinc.demo.ttt.model.domain.Position;
+import pl.mwinc.demo.ttt.model.mapper.BoardMarshaller;
 
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 public class BoardAnalyzerTestDataProvider {
 
     private static Board board(String board) {
-        return Board.Marshaller.unmarshal(board);
+        return BoardMarshaller.unmarshal(board);
     }
 
     private static Position position(int[] coordinates) {
