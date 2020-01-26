@@ -1,40 +1,34 @@
 package pl.mwinc.demo.ttt.model.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Board {
-    private List<List<Field>> rows;
+    private Field[][] fields;
 
     public Board(int size) {
-        ArrayList<List<Field>> rows = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            ArrayList<Field> row = new ArrayList<>(size);
-            for (int j = 0; j < size; j++) {
-                row.add(j, new Field());
-            }
-            rows.add(i, row);
-        }
-        this.rows = rows;
+        fields = new Field[size][size];
+        Arrays.setAll(fields, i -> {
+            Field[] row = new Field[size];
+            Arrays.setAll(row, j -> new Field());
+            return row;
+        });
     }
 
     public Board(List<List<PlayerSymbol>> rows) {
-        this.rows = rows.stream()
-                .map(row -> row.stream()
+        fields = rows.stream()
+                .map(cols -> cols.stream()
                         .map(Field::new)
-                        .collect(Collectors.toList())
-                ).collect(Collectors.toList());
+                        .toArray(Field[]::new))
+                .toArray(Field[][]::new);
     }
 
     public int getSize() {
-        return rows.size();
+        return fields.length;
     }
 
     public Optional<PlayerSymbol> getField(Position position) {
@@ -58,8 +52,8 @@ public class Board {
     }
 
     private boolean isOnBoard(int row, int col) {
-        return row >= 0 && row < rows.size()
-                && col >= 0 && col < rows.size(); // <- valid because board is square
+        return row >= 0 && row < getSize()
+                && col >= 0 && col < getSize(); // <- valid because board is square
     }
 
     private Field getBoardField(Position p) {
@@ -67,7 +61,7 @@ public class Board {
     }
 
     private Field getBoardField(int row, int col) {
-        return rows.get(row).get(col);
+        return fields[row][col];
     }
 
     public void apply(Move move) throws UnacceptableMoveException {
