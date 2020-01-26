@@ -4,7 +4,6 @@ import pl.mwinc.demo.ttt.controler.exception.UnacceptableMoveException;
 import pl.mwinc.demo.ttt.model.PlayerSymbol;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 public class Board {
@@ -19,12 +18,21 @@ public class Board {
         });
     }
 
-    public Board(List<List<PlayerSymbol>> rows) {
-        fields = rows.stream()
-                .map(cols -> cols.stream()
-                        .map(Field::new)
-                        .toArray(Field[]::new))
-                .toArray(Field[][]::new);
+    public Board(PlayerSymbol[][] symbols){
+        validate(symbols);
+        fields = Arrays.stream(symbols)
+                .map(s -> Arrays.stream(s)
+                    .map(Field::new)
+                        .toArray(Field[]::new)
+                ).toArray(Field[][]::new);
+    }
+
+    private <T> void validate(T[][] candidate){
+        for(T[] row: candidate){
+            if(row.length != candidate.length){
+                throw new IllegalArgumentException("Board must be square");
+            }
+        }
     }
 
     public int getSize() {
